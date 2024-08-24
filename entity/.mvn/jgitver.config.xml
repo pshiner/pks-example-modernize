@@ -1,0 +1,33 @@
+<configuration xmlns="http://jgitver.github.io/maven/configuration/1.1.0"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://jgitver.github.io/maven/configuration/1.1.0 https://jgitver.github.io/maven/configuration/jgitver-configuration-v1_1_0.xsd">
+
+  <strategy>SCRIPT</strategy>
+  <scriptType>GROOVY</scriptType>
+  <script><![CDATA[
+//
+// build annotated tag: <major>;<minor>.<patch>
+// build main/master..: <major>;<minor>;<patch+1>;<githash>
+// build other branch.: <major>;<minor>'<patch+1>;<githash>;
+// build dirty........: adds 'dirty' at end
+// 
+def currentPatch = metadata.CURRENT_VERSION_PATCH
+
+// autoIncrementPatch by default
+def patch = (metadata.BASE_COMMIT_ON_HEAD && metadata.ANNOTATED && ! metadata.DIRTY) ? currentPatch : currentPatch + 1
+
+def mmp = metadata.CURRENT_VERSION_MAJOR + ';' + metadata.CURRENT_VERSION_MINOR + ';' + patch
+
+def qualifiers = []
+
+if (! metadata.BASE_COMMIT_ON_HEAD || ! metadata.ANNOTATED || metadata.DIRTY ) {
+    qualifiers.add(metadata.GIT_SHA1_8)
+    if (metadata.DIRTY) {
+        qualifiers.add(metadata.DIRTY_TEXT)
+    }
+    qualifiers.add("SNAPSHOT")
+}
+
+print mmp + ';' + qualifiers.join(';')
+]]></script>
+</configuration>

@@ -1,0 +1,199 @@
+databaseChangeLog:
+- changeSet:
+    id: 1724531182596-1
+    author: pkshiner (generated)
+    changes:
+    - createTable:
+        columns:
+        - column:
+            name: fk_program_code
+            type: VARCHAR(8)
+        - column:
+            name: n_loan_number
+            type: INTEGER
+        - column:
+            name: c_code
+            type: VARCHAR(8)
+        - column:
+            name: c_name
+            type: VARCHAR(64)
+        - column:
+            name: c_description
+            type: VARCHAR(512)
+        - column:
+            name: bd_interest_rate
+            type: numeric(32, 8)
+        - column:
+            name: bd_original_principal
+            type: numeric(32, 8)
+        tableName: ex_loan
+- changeSet:
+    id: 1724531182596-2
+    author: pkshiner (generated)
+    changes:
+    - createTable:
+        columns:
+        - column:
+            name: fk_program_code
+            type: VARCHAR(8)
+        - column:
+            name: fk_loan_number
+            type: INTEGER
+        - column:
+            name: n_pmt_sequence
+            type: INTEGER
+        - column:
+            name: d_pmt_date
+            type: date
+        - column:
+            name: d_pmt_adjusted_date
+            type: date
+        - column:
+            name: bd_pmt_principal
+            type: numeric(32, 8)
+        - column:
+            name: bd_pmt_interest
+            type: numeric(32, 8)
+        - column:
+            name: bd_pmt_cap_interest
+            type: numeric(32, 8)
+        - column:
+            name: bd_bal_principal
+            type: numeric(32, 8)
+        - column:
+            name: bd_bal_cap_interest
+            type: numeric(32, 8)
+        tableName: ex_periodic_payment
+- changeSet:
+    id: 1724531182596-3
+    author: pkshiner (generated)
+    changes:
+    - createTable:
+        columns:
+        - column:
+            name: c_code
+            type: VARCHAR(8)
+        - column:
+            name: c_name
+            type: VARCHAR(64)
+        - column:
+            name: c_description
+            type: VARCHAR(512)
+        tableName: ex_program
+- changeSet:
+    id: 1724531182596-4
+    author: pkshiner (generated)
+    changes:
+    - loadData:
+        columns:
+        - column:
+            header: fk_program_code
+            name: fk_program_code
+            type: STRING
+        - column:
+            header: n_loan_number
+            name: n_loan_number
+            type: NUMERIC
+        - column:
+            header: c_code
+            name: c_code
+            type: STRING
+        - column:
+            header: c_name
+            name: c_name
+            type: STRING
+        - column:
+            header: c_description
+            name: c_description
+            type: STRING
+        - column:
+            header: bd_interest_rate
+            name: bd_interest_rate
+            type: NUMERIC
+        - column:
+            header: bd_original_principal
+            name: bd_original_principal
+            type: NUMERIC
+        commentLineStartsWith: '#'
+        encoding: UTF-8
+        file: ./data/ex_loan.csv
+        quotchar: '"'
+        separator: ','
+        tableName: ex_loan
+- changeSet:
+    id: 1724531182596-5
+    author: pkshiner (generated)
+    changes:
+    - loadData:
+        columns:
+        - column:
+            header: fk_program_code
+            name: fk_program_code
+            type: STRING
+        - column:
+            header: fk_loan_number
+            name: fk_loan_number
+            type: NUMERIC
+        - column:
+            header: n_pmt_sequence
+            name: n_pmt_sequence
+            type: NUMERIC
+        - column:
+            header: d_pmt_date
+            name: d_pmt_date
+            type: DATE
+        - column:
+            header: d_pmt_adjusted_date
+            name: d_pmt_adjusted_date
+            type: DATE
+        - column:
+            header: bd_pmt_principal
+            name: bd_pmt_principal
+            type: NUMERIC
+        - column:
+            header: bd_pmt_interest
+            name: bd_pmt_interest
+            type: NUMERIC
+        - column:
+            header: bd_pmt_cap_interest
+            name: bd_pmt_cap_interest
+            type: NUMERIC
+        - column:
+            header: bd_bal_principal
+            name: bd_bal_principal
+            type: NUMERIC
+        - column:
+            header: bd_bal_cap_interest
+            name: bd_bal_cap_interest
+            type: NUMERIC
+        commentLineStartsWith: '#'
+        encoding: UTF-8
+        file: ./data/ex_periodic_payment.csv
+        quotchar: '"'
+        separator: ','
+        tableName: ex_periodic_payment
+- changeSet:
+    id: 1724531182596-6
+    author: pkshiner (generated)
+    changes:
+    - loadData:
+        columns:
+        - column:
+            header: c_code
+            name: c_code
+            type: STRING
+        - column:
+            header: c_name
+            name: c_name
+            type: STRING
+        - column:
+            header: c_description
+            name: c_description
+            type: STRING
+        commentLineStartsWith: '#'
+        encoding: UTF-8
+        file: ./data/ex_program.csv
+        quotchar: '"'
+        separator: ','
+        tableName: ex_program
+

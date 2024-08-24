@@ -69,7 +69,7 @@
 		<dependency>
 			<groupId>org.postgresql</groupId>
 			<artifactId>postgresql</artifactId>
-			<scope>runtime</scope>
+			<!-- <scope>runtime</scope> -->
 		</dependency>
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
@@ -124,7 +124,20 @@
 					</excludes>
 				</configuration>
 			</plugin>
+			<plugin>
+    			<groupId>org.liquibase</groupId>
+    			<artifactId>liquibase-maven-plugin</artifactId>
+    			<version>4.29.1</version>
+				<configuration>
+				    <changeLogFile>src/main/resources/db/changelog/changelog-master.yaml</changeLogFile>
+    				<url>jdbc:postgresql://localhost:5432/ex_modernize</url>
+    				<username>ex_admin</username>
+    				<password>ex_password</password>
+				</configuration>
+			</plugin>			
 		</plugins>
 	</build>
+
+<!-- add to compiler arguments "-XX:+EnableDynamicAgentLoading" -->
 
 </project>

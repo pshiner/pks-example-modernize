@@ -1,5 +1,10 @@
-08/24/24 - (1.5) initial setup of workspace environment
-: - spent about an hour configuring a new, empty workspace, updating visual code, getting java setup, etc.
+08/24/24 - initial setup of workspace environment
+  - spent about an hour configuring a new, empty workspace, updating visual code, getting java setup, etc.
   - used the spring initializer to setup a very basic project space
-  - checked into git for a timestamp
-  
+  - checked into git for a first timestamp, about 1.5 hours used.
+  - manually created a file to create tables, load tables with tiny amount of data
+  - hooked up liquibase, generate database docs and change set w/ data to initialize database
+  - configured base properties for liquibase, changes to application.yaml file
+  - all green on running of tests
+  - installed jgit ver to grab versions from git tags
+  - things look smoot to begin making the entities to work with the existing tables
