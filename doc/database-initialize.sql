@@ -1,0 +1,64 @@
+/*
+ * The assumed primary key is C_CODE.
+ */
+CREATE TABLE EX_PROGRAM (
+    C_CODE			VARCHAR(8),
+	C_NAME			VARCHAR(64),
+	C_DESCRIPTION	VARCHAR(512)
+);
+
+INSERT INTO EX_PROGRAM (C_CODE, C_NAME, C_DESCRIPTION) VALUES
+	('AAA', 'My first loan program', 'This is the first.'),
+	('AAB', 'My second loan program', 'This is the second of a few programs.'),
+	('CAAXW', 'My third loan program', 'This is number 3 program');
+
+/*
+ * The assumed primary key is FK_PROGRAM_CODE, N_LOAN_NUMBER.
+ */
+CREATE TABLE EX_LOAN (
+	FK_PROGRAM_CODE			VARCHAR(8),
+	N_LOAN_NUMBER			INTEGER,
+	C_CODE					VARCHAR(8),
+	C_NAME					VARCHAR(64),
+	C_DESCRIPTION			VARCHAR(512),
+	BD_INTEREST_RATE		NUMERIC(32,8),
+	BD_ORIGINAL_PRINCIPAL	NUMERIC(32,8)	
+);
+
+INSERT INTO EX_LOAN (FK_PROGRAM_CODE, N_LOAN_NUMBER, C_CODE, C_NAME, C_DESCRIPTION, BD_INTEREST_RATE, BD_ORIGINAL_PRINCIPAL) VALUES
+	('AAA', 1, 'XYZ-1', 'Boat', 'Going to buy a boat.', 3.75, 15500),
+	('AAA', 2, 'XYZ-2', 'House', 'Going to buy a house.', 3.5575, 554300),
+	('AAA', 3, 'ABC-3', 'Truck', 'Going to buy a truck.', 4.875, 15500),
+	('AAA', 4, 'XYZ-4', 'Motorcycle', 'Going to buy a motorcycle.', 2.75, 15500),
+	('AAA', 5, 'ZZZ-5', 'Plane', 'Going to buy a plane.', 8.75, 675500);
+
+/*
+ * The assumed primary key is FK_PROGRAM_CODE, FK_LOAN_NUMBER, N_PMT_SEQUENCE.
+ */
+CREATE TABLE EX_PERIODIC_PAYMENT (
+	FK_PROGRAM_CODE			VARCHAR(8),
+	FK_LOAN_NUMBER			INTEGER,
+	N_PMT_SEQUENCE			INTEGER,
+	D_PMT_DATE				DATE,
+	D_PMT_ADJUSTED_DATE		DATE,
+	BD_PMT_PRINCIPAL		NUMERIC(32,8),
+	BD_PMT_INTEREST			NUMERIC(32,8),
+	BD_PMT_CAP_INTEREST		NUMERIC(32,8),
+	BD_BAL_PRINCIPAL		NUMERIC(32,8),
+	BD_BAL_CAP_INTEREST		NUMERIC(32,8)
+);
+
+INSERT INTO EX_PERIODIC_PAYMENT (
+	FK_PROGRAM_CODE, FK_LOAN_NUMBER, N_PMT_SEQUENCE, D_PMT_DATE, D_PMT_ADJUSTED_DATE,
+	BD_PMT_PRINCIPAL, BD_PMT_INTEREST, BD_PMT_CAP_INTEREST, BD_BAL_PRINCIPAL, BD_BAL_CAP_INTEREST) VALUES
+	('AAA', 1, 1, '2024-08-05', '2024-08-05', 325, 645, 0, 15450, 0 ),
+	('AAA', 1, 1, '2024-09-05', '2024-09-05', 325, 645, 0, 15450, 0 ),
+	('AAA', 1, 1, '2024-10-05', '2024-10-05', 325, 645, 0, 15450, 0 ),
+	('AAA', 1, 1, '2024-11-05', '2024-11-05', 325, 645, 0, 15450, 0 ),
+	('AAA', 1, 1, '2024-12-05', '2024-12-05', 325, 645, 0, 15450, 0 ),
+	('AAA', 1, 1, '2025-01-05', '2025-01-05', 325, 645, 0, 15450, 0 ),
+	('AAA', 1, 1, '2025-02-05', '2025-02-05', 325, 645, 0, 15450, 0 ),
+	('AAA', 1, 1, '2025-03-05', '2025-03-05', 325, 645, 0, 15450, 0 ),
+	('AAA', 1, 1, '2025-04-05', '2025-04-05', 325, 645, 0, 15450, 0 ),
+	('AAA', 1, 1, '2025-05-05', '2025-05-05', 325, 645, 0, 15450, 0 ),
+	('AAA', 1, 1, '2025-06-05', '2025-06-05', 325, 645, 0, 15450, 0 );
