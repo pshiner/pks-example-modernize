@@ -90,6 +90,16 @@
 
 	<build>
 		<plugins>
+		      <plugin>
+        		<artifactId>maven-compiler-plugin</artifactId>
+        		<version>3.10.1</version>
+        		<configuration>
+	        		<compilerArgs>
+		        		<arg>-parameters</arg>
+	        		</compilerArgs>
+        		</configuration>
+		    </plugin>
+			
 			<plugin>
 				<groupId>org.hibernate.orm.tooling</groupId>
 				<artifactId>hibernate-enhance-maven-plugin</artifactId>
