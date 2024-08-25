@@ -8,3 +8,5 @@
   - all green on running of tests
   - installed jgit ver to grab versions from git tags
   - things look smoot to begin making the entities to work with the existing tables
+  - starting again
+  -
