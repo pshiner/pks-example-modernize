@@ -7,18 +7,13 @@ import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.test.autoconfigure.data.jdbc.DataJdbcTest;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.test.context.ActiveProfiles;
 
 
-// @DataJdbcTest(properties = {
-//     "spring.datasource.url=jdbc:h2:mem:testdb",
-//     "spring.datasource.username=test",
-//     "spring.datasource.password=",
-//     "spring.jpa.hibernate.ddl-auto=create-drop"
-// })
-// @RunWith
+
 @SpringBootTest
+// @ActiveProfiles("h2db")
 public class LoanProgramEntityTest {
 
     @Autowired
@@ -48,6 +43,7 @@ public class LoanProgramEntityTest {
         assertEquals(loanProgram.getCode(), testLoanProgram.getCode());
         assertEquals(loanProgram.getName(), testLoanProgram.getName());
         assertEquals(loanProgram, testLoanProgram);
+        assertEquals(4,loanProgramRespository.findAll().size());
     }
 
 }

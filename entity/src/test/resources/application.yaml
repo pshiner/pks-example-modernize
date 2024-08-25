@@ -1,8 +1,0 @@
-spring:
-  datasource:
-    url: dbc:h2:mem:testdb;DB_CLOSE_DELAY=-1
-    username: sa
-    password: sa
-
-  # liquibase:
-  #   change-log: classpath:/db/changelog/changelog-master.yaml
