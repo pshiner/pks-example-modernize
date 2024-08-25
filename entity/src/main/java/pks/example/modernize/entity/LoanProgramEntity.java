@@ -9,7 +9,7 @@ import lombok.NoArgsConstructor;
 
 @Entity @Data @NoArgsConstructor
 @Table(name = "EX_PROGRAM")
-public class LoanProgram {
+public class LoanProgramEntity {
     @Id
     @Column(name = "C_CODE")
     private String code;

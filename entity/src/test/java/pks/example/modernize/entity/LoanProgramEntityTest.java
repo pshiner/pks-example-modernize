@@ -19,12 +19,12 @@ public class LoanProgramEntityTest {
     @Autowired
     private LoanProgramRespository loanProgramRespository;
 
-    private LoanProgram testLoanProgram;
+    private LoanProgramEntity testLoanProgram;
     private Integer count = 0;
 
     @BeforeEach
     public void setUp() {
-        testLoanProgram = new LoanProgram();
+        testLoanProgram = new LoanProgramEntity();
         testLoanProgram.setCode("ASD-"+count.toString());
         testLoanProgram.setName("my big name");
         testLoanProgram.setDescription("this is a long description");
@@ -38,7 +38,7 @@ public class LoanProgramEntityTest {
 
     @Test
     void ExerciseLoanProgramRespositoryTest() {
-        LoanProgram loanProgram = loanProgramRespository.findById(testLoanProgram.getCode()).orElse(null);
+        LoanProgramEntity loanProgram = loanProgramRespository.findById(testLoanProgram.getCode()).orElse(null);
         assertNotNull(loanProgram);
         assertEquals(loanProgram.getCode(), testLoanProgram.getCode());
         assertEquals(loanProgram.getName(), testLoanProgram.getName());
