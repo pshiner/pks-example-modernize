@@ -1,6 +1,14 @@
+DROP TABLE IF EXISTS DATABASECHANGELOG;
+DROP TABLE IF EXISTS DATABASECHANGELOGLOCK;
+
+DROP TABLE IF EXISTS EX_PERIODIC_PAYMENT;
+DROP TABLE IF EXISTS EX_LOAN;
+DROP TABLE IF EXISTS EX_PROGRAM;
+
 /*
  * The assumed primary key is C_CODE.
  */
+
 CREATE TABLE EX_PROGRAM (
     C_CODE			VARCHAR(8),
 	C_NAME			VARCHAR(64),
@@ -19,18 +27,19 @@ CREATE TABLE EX_LOAN (
 	FK_PROGRAM_CODE			VARCHAR(8),
 	N_LOAN_NUMBER			INTEGER,
 	C_CODE					VARCHAR(8),
+	C_STATUS				VARCHAR(1),
 	C_NAME					VARCHAR(64),
 	C_DESCRIPTION			VARCHAR(512),
 	BD_INTEREST_RATE		NUMERIC(32,8),
 	BD_ORIGINAL_PRINCIPAL	NUMERIC(32,8)	
 );
 
-INSERT INTO EX_LOAN (FK_PROGRAM_CODE, N_LOAN_NUMBER, C_CODE, C_NAME, C_DESCRIPTION, BD_INTEREST_RATE, BD_ORIGINAL_PRINCIPAL) VALUES
-	('AAA', 1, 'XYZ-1', 'Boat', 'Going to buy a boat.', 3.75, 15500),
-	('AAA', 2, 'XYZ-2', 'House', 'Going to buy a house.', 3.5575, 554300),
-	('AAA', 3, 'ABC-3', 'Truck', 'Going to buy a truck.', 4.875, 15500),
-	('AAA', 4, 'XYZ-4', 'Motorcycle', 'Going to buy a motorcycle.', 2.75, 15500),
-	('AAA', 5, 'ZZZ-5', 'Plane', 'Going to buy a plane.', 8.75, 675500);
+INSERT INTO EX_LOAN (FK_PROGRAM_CODE, N_LOAN_NUMBER, C_CODE, C_STATUS,C_NAME, C_DESCRIPTION, BD_INTEREST_RATE, BD_ORIGINAL_PRINCIPAL) VALUES
+	('AAA', 1, 'XYZ-1', 'D', 'Boat', 'Going to buy a boat.', 3.75, 15500),
+	('AAA', 2, 'XYZ-2', 'D', 'House', 'Going to buy a house.', 3.5575, 554300),
+	('AAA', 3, 'ABC-3', 'D', 'Truck', 'Going to buy a truck.', 4.875, 15500),
+	('AAA', 4, 'XYZ-4', 'D', 'Motorcycle', 'Going to buy a motorcycle.', 2.75, 15500),
+	('AAA', 5, 'ZZZ-5', 'D', 'Plane', 'Going to buy a plane.', 8.75, 675500);
 
 /*
  * The assumed primary key is FK_PROGRAM_CODE, FK_LOAN_NUMBER, N_PMT_SEQUENCE.
