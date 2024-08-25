@@ -10,4 +10,5 @@
   - things look smoot to begin making the entities to work with the existing tables
   - starting again
   - stopped, was having issues getting the test to run correctly, errors, on EX_LOANPROGRAM
-  - starting again
+  - starting again, stopped, starting: issue is just getting testing going
+  -
