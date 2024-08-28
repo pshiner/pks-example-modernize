@@ -62,8 +62,7 @@ public class LoanProgramEntityTests {
         loanProgramRespository.save(testLoanProgram);
 
         LoanEntity testLoan = new LoanEntity();
-        LoanEntityId loanId = new LoanEntityId(10,"AAA");
-        testLoan.setLoanId(loanId);
+        testLoan.setLoanId(new LoanEntityId(10,"AAA"));
         testLoan.setCode("LN-"+count.toString());
         testLoan.setName("Computer");
         testLoan.setAmount(new BigDecimal(123423));
@@ -73,12 +72,12 @@ public class LoanProgramEntityTests {
         count = loanRepository.findAll().size();
 
         
-        Optional<LoanEntity> loan = loanRepository.findById(loanId);
-        LoanEntity l = loan.orElse(null);
-        assertNotNull(l);
-        assertEquals(loanId, l);
+        LoanEntity loan = loanRepository.findById(new LoanEntityId(1,"AAA")).orElse(null);
+        assertNotNull(loan);
+        assertEquals("AAA",loan.loanId.getProgram());
+        assertEquals(1,loan.loanId.getId());
 
-        if (l != null) {}
-            loanRepository.delete(l);
+        if (loan != null) {}
+            loanRepository.delete(loan);
     }
 }

@@ -11,9 +11,11 @@ import jakarta.persistence.Id;
 import jakarta.persistence.IdClass;
 import jakarta.persistence.Table;
 import lombok.Data;
+import lombok.Getter;
 import lombok.NoArgsConstructor;
+import lombok.Setter;
 
-@Entity @Data @NoArgsConstructor
+@Entity @Getter @Setter
 @Table(name = "EX_LOAN")
 // @IdClass(LoanEntityId.class)
 public class LoanEntity {
@@ -56,5 +58,19 @@ public class LoanEntity {
     //     this.id = loanId.getId();
     //     this.program = loanId.program();
     // }
+
+    public LoanEntity() {
+        this.status = "D";
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+        if (this == obj) return true;
+        if (obj == null || this.getClass() != obj.getClass()) 
+            return false;
+
+        LoanEntity other = (LoanEntity)obj;
+        return (this.loanId.equals(other.loanId));
+    }
 
 }

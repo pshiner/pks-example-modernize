@@ -36,14 +36,12 @@ public class LoanEntityId implements Serializable {
 
     @Override
     public boolean equals(Object obj) {
-        if (this == obj) {
-            return true;
-        }
-        if (obj == null || getClass() != obj.getClass()) {
+        if (this == obj) return true;       
+        if (obj == null || this.getClass() != obj.getClass())
             return false;
-        }
-        LoanEntityId loanEntityId = (LoanEntityId)obj;
-        return id.equals(loanEntityId.id) && program.equals(loanEntityId.program);
+
+        LoanEntityId other = (LoanEntityId)obj;
+        return id.equals(other.id) && program.equals(other.program);
     }
 }
 
