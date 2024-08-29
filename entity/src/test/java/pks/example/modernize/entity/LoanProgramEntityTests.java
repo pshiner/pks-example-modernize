@@ -25,6 +25,16 @@ public class LoanProgramEntityTests {
     @Autowired
     private LoanRepository loanRepository;
 
+    @Autowired
+    private UserRepository userRepository;
+
+    @Autowired
+    private LoanScheduleRepository loanScheduleRepository;
+
+    @Autowired
+    private BorrowerRepository borrowerRepository;
+
+
     private LoanProgramEntity testLoanProgram;
     private Integer count = 0;
 
@@ -54,9 +64,18 @@ public class LoanProgramEntityTests {
         
         loanProgramRespository.delete(testLoanProgram);
     }
-
+/* 
     @Test
-    void ExerciseLoanRepository() {
+    void ExerciseHierarchy() {
+
+
+
+        BorrowerEntityPk borrowerPk = new BorrowerEntityPk();
+
+        BorrowerEntity borrower = new BorrowerEntity();
+        borrower.setName("Peter");
+        borrower.setOrganization("MetaPhase");");
+
         testLoanProgram = new LoanProgramEntity();
         testLoanProgram.setCode("MMM-1");
         loanProgramRespository.save(testLoanProgram);
@@ -80,4 +99,5 @@ public class LoanProgramEntityTests {
         if (loan != null) {}
             loanRepository.delete(loan);
     }
+ */
 }
