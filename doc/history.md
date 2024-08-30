@@ -21,4 +21,10 @@
   - commented out test code to get it to run and complete some test
   - need to work on the test code now
 08/30/24
-  - 
+  - got some of the repositories to work; need manually add routines as not defaults not auto per quarkus
+  - had issue with @query syntax, no need for quotes like actual sql
+  - shifted to @datajpatests
+  - don't really need to set show-sql because @datajpatest turns on
+  - needed to add testentitymanager bean to test class
+  - should be able to pick up speed now
+

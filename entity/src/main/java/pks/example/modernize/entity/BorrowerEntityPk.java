@@ -12,10 +12,10 @@ import lombok.Setter;
 public class BorrowerEntityPk implements Serializable {
 
     @Column(name = "FK_PROGRAM_CODE")
-    private String program;
+    protected String program;
 
     @Column(name = "C_CODE")
-    private String code;
+    protected String code;
 
     public BorrowerEntityPk() {
     }

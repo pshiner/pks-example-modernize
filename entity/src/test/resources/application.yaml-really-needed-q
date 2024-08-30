@@ -1,0 +1,14 @@
+spring:
+  application:
+    name: entity
+  datasource:
+    url: jdbc:postgresql://localhost:5432/ex_modernize
+    username: ex_admin
+    password: ex_password
+  jpa:
+    show-sql: true
+
+    
+  liquibase:
+    change-log: classpath:/db/changelog/changelog-master.yaml
+

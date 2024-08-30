@@ -6,8 +6,13 @@ import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.Id;
 import jakarta.persistence.Table;
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
 
-@Entity @Table(name = "EX_APP_USER")
+@Entity @Getter @Setter @AllArgsConstructor @NoArgsConstructor
+@Table(name = "EX_APP_USER")
 public class UserEntity {
     
     @Id @Column(name = "C_USERNAME")
@@ -16,9 +21,6 @@ public class UserEntity {
     @Column(name = "C_NAME")
     private String name;
     
-    public UserEntity() {
-    }
-
     @Override
     public int hashCode() {
         return Objects.hashCode(username);
