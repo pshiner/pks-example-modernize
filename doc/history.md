@@ -12,3 +12,13 @@
   - stopped, was having issues getting the test to run correctly, errors, on EX_LOANPROGRAM
   - starting again, stopped, starting: issue is just getting testing going
   - got it to work in testing, was trying too many things
+. . .
+  - check the git log for some details as didn't update this file
+  - changed the initial database to add some fields, tables
+. . .
+08/29/24 
+  - briefly worked to complete the entities
+  - commented out test code to get it to run and complete some test
+  - need to work on the test code now
+08/30/24
+  - 
