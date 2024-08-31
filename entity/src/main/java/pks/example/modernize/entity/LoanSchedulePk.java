@@ -4,14 +4,16 @@ import java.util.Objects;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Embeddable;
+import lombok.AllArgsConstructor;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 import lombok.Setter;
 
-@Embeddable @Getter @Setter
+@Embeddable @Getter @Setter @NoArgsConstructor @AllArgsConstructor
 public class LoanSchedulePk {
 
-    @Column(name = "FK_BORROWER_CODE")
-    private String borrowerCode;
+    @Column(name = "FK_PROGRAM_CODE")
+    private String programCode;
 
     @Column(name = "FK_LOAN_CODE")
     private String loanCode;
@@ -21,7 +23,7 @@ public class LoanSchedulePk {
 
     @Override
     public int hashCode() {
-        return Objects.hash(borrowerCode,loanCode,sequence);
+        return Objects.hash(programCode,loanCode,sequence);
     }
 
     @Override
@@ -31,7 +33,7 @@ public class LoanSchedulePk {
             return false;
 
         LoanSchedulePk other = (LoanSchedulePk) obj;
-        return this.borrowerCode.equals(other.borrowerCode) &&
+        return this.programCode.equals(other.programCode) &&
                 this.loanCode.equals(other.loanCode) &&
                 this.sequence.equals(other.sequence);
     }

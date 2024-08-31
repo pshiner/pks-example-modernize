@@ -1,11 +1,14 @@
 package pks.example.modernize.entity;
 
 import java.math.BigDecimal;
+import java.sql.Date;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.EmbeddedId;
 import jakarta.persistence.Entity;
 import jakarta.persistence.Table;
+import jakarta.persistence.Temporal;
+import jakarta.persistence.TemporalType;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -15,6 +18,9 @@ public class LoanEntity {
 
     @EmbeddedId
     LoanEntityPk pk;
+
+    @Column(name = "FK_BORROWER_CODE")
+    private String borrowerCode;
 
     @Column(name = "N_LOAN_NUMBER")
     private Integer loanNumber;
@@ -33,6 +39,9 @@ public class LoanEntity {
 
     @Column(name = "BD_ORIGINAL_PRINCIPAL")
     private BigDecimal amount;
+
+    @Column(name = "FK_APP_USER")
+    private String appUser;
 
     // public LoanEntityId getLoanEntityId() {
     //     return new LoanEntityId(id, program);

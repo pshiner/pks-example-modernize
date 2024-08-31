@@ -29,3 +29,6 @@
   - should be able to pick up speed now
 08/31/24
   - working on test suite
+  - fixed the messed up column names
+  - loads rows into all test tables
+  - test transaction turned off so saves test data

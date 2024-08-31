@@ -7,20 +7,23 @@ import jakarta.persistence.Column;
 import jakarta.persistence.EmbeddedId;
 import jakarta.persistence.Entity;
 import jakarta.persistence.Table;
+import jakarta.persistence.Temporal;
+import jakarta.persistence.TemporalType;
 import lombok.Getter;
 import lombok.Setter;
 
 @Entity @Getter @Setter
- @Table(name = "EX_PERIODIC_PAYMENT")
-public class LoanSchedule {
+@Table(name = "EX_PERIODIC_PAYMENT")
+public class LoanScheduleEntity {
 
     @EmbeddedId
     private LoanSchedulePk pk;
 
+    @Temporal(TemporalType.DATE)
     @Column(name = "D_PMT_DATE")
     private Date pmtDate;
 
-    @Column(name = "D_PMTADJUSTED_DATE")
+    @Column(name = "D_PMT_ADJUSTED_DATE")
     private Date pmtAdjustedDate;
 
     @Column(name = "BD_PMT_PRINCIPAL")

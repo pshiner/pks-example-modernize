@@ -5,6 +5,8 @@ import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import java.math.BigDecimal;
+import java.time.LocalDate;
+import java.sql.Date;
 import java.util.List;
 import java.util.Optional;
 
@@ -17,14 +19,15 @@ import org.springframework.boot.test.autoconfigure.jdbc.AutoConfigureTestDatabas
 import org.springframework.boot.test.autoconfigure.jdbc.AutoConfigureTestDatabase.Replace;
 import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
 import org.springframework.boot.test.autoconfigure.orm.jpa.TestEntityManager;
-import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.ActiveProfiles;
+import org.springframework.transaction.annotation.Propagation;
+import org.springframework.transaction.annotation.Transactional;
 
 
 
-// @SpringBootTest
 @DataJpaTest
 @AutoConfigureTestDatabase(replace = Replace.NONE)
+@Transactional(propagation = Propagation.NOT_SUPPORTED)
 // @ActiveProfiles("h2db")
 public class LoanProgramEntityTests {
 
@@ -32,7 +35,7 @@ public class LoanProgramEntityTests {
     TestEntityManager testEntityManager;
 
     @Autowired
-    private LoanProgramRespository loanProgramRespository;
+    private LoanProgramRepository loanProgramRepository;
 
     @Autowired
     private LoanRepository loanRepository;
@@ -65,16 +68,16 @@ public class LoanProgramEntityTests {
         testLoanProgram.setCode("ASD-"+count.toString());
         testLoanProgram.setName("my big name");
         testLoanProgram.setDescription("this is a long description");
-        loanProgramRespository.save(testLoanProgram);        
+        loanProgramRepository.save(testLoanProgram);        
         
-        LoanProgramEntity loanProgram = loanProgramRespository.findById(testLoanProgram.getCode()).orElse(null);
+        LoanProgramEntity loanProgram = loanProgramRepository.findById(testLoanProgram.getCode()).orElse(null);
         assertNotNull(loanProgram);
         assertEquals(loanProgram.getCode(), testLoanProgram.getCode());
         assertEquals(loanProgram.getName(), testLoanProgram.getName());
         assertEquals(loanProgram, testLoanProgram);
-        assertEquals(4,loanProgramRespository.findAll().size());
+        assertEquals(4,loanProgramRepository.findAll().size());
         
-        loanProgramRespository.delete(testLoanProgram);
+        loanProgramRepository.delete(testLoanProgram);
     }
  
     @Test @Order(100)
@@ -87,11 +90,11 @@ public class LoanProgramEntityTests {
         userRepository.flush();
 
         // add a program
-        loanProgramRespository.save(new LoanProgramEntity("SSJ","SSJ Loan Program","Shiner/Smith/Jones"));
-        loanProgramRespository.flush();
+        loanProgramRepository.save(new LoanProgramEntity("SSJ","SSJ Loan Program","Shiner/Smith/Jones"));
+        loanProgramRepository.flush();
 
         // add a borrower to agree to a loan
-        List<LoanProgramEntity> pList = loanProgramRespository.findAnyMatching("Smith");
+        List<LoanProgramEntity> pList = loanProgramRepository.findAnyMatching("Smith");
         assertEquals(1,pList.size());
 
         LoanProgramEntity pgm = pList.get(0);
@@ -101,39 +104,37 @@ public class LoanProgramEntityTests {
         List<BorrowerEntity> bList = borrowerRepository.listByCode("BC1922");
         assertEquals(1,bList.size());
         assertTrue(bList.get(0).getName().equals("Borrower Tom"));
+        BorrowerEntity bwr = bList.get(0);
 
 
+        UserEntity usr = userRepository.findById("smitht").orElse(null);
+        assertNotNull(usr);
 
-
-
-        // BorrowerEntityPk borrowerPk = new BorrowerEntityPk();
-
-        // BorrowerEntity borrower = new BorrowerEntity();
-        // borrower.setName("Peter");
-        // borrower.setOrganization("MetaPhase");
-
-        // testLoanProgram = new LoanProgramEntity();
-        // testLoanProgram.setCode("MMM-1");
-        // loanProgramRespository.save(testLoanProgram);
-
-        // LoanEntity testLoan = new LoanEntity();
-        // testLoan.setLoanId(new LoanEntityPk(10,"AAA"));
-        // testLoan.setCode("LN-"+count.toString());
-        // testLoan.setName("Computer");
-        // testLoan.setAmount(new BigDecimal(123423));
-        // testLoan.setRate(new BigDecimal(4.375));
-        // loanRepository.save(testLoan);
-
-        // count = loanRepository.findAll().size();
-
+        LoanEntity loan = new LoanEntity();
+        loan.setPk(new LoanEntityPk("LLL001",pgm.getCode()));
+        loan.setAmount(new BigDecimal(39283));
+        loan.setBorrowerCode(bwr.getPk().getCode());
+        loan.setDescription("My New Loan");
+        loan.setLoanNumber(16);
+        loan.setName("Loan # 16");
+        loan.setRate(new BigDecimal(12.325));
+        loan.setAppUser(usr.getUsername());
+        loanRepository.save(loan);
         
-        // LoanEntity loan = loanRepository.findById(new LoanEntityPk(1,"AAA")).orElse(null);
-        // assertNotNull(loan);
-        // assertEquals("AAA",loan.loanId.getProgram());
-        // assertEquals(1,loan.loanId.getId());
+        for (int count = 0; count < 10; count++) {
+            LoanSchedulePk pmtPk= new LoanSchedulePk();
+            pmtPk.setLoanCode(loan.pk.getCode());
+            pmtPk.setProgramCode(loan.pk.getProgram());
+            pmtPk.setSequence(count);
 
-        // if (loan != null) {}
-        //     loanRepository.delete(loan);
+            LoanScheduleEntity pmt = new LoanScheduleEntity();
+            pmt.setPk(pmtPk);
+            pmt.setBalCapitalizedInterest(new BigDecimal(0));
+            pmt.setBalPrincipal(new BigDecimal(230912));
+            pmt.setPmtDate(new Date(System.currentTimeMillis()));
+            loanScheduleRepository.save(pmt);
+        }
+
     }
 
 }

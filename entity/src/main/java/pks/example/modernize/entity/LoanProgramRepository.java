@@ -5,7 +5,7 @@ import org.springframework.data.jpa.repository.Query;
 
 import java.util.List;
 
-public interface LoanProgramRespository extends JpaRepository<LoanProgramEntity,String> {
+public interface LoanProgramRepository extends JpaRepository<LoanProgramEntity,String> {
     
     List<LoanProgramEntity> findByName(String name);
     List<LoanProgramEntity> findByNameContaining(String name);
