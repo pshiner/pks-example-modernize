@@ -27,4 +27,5 @@
   - don't really need to set show-sql because @datajpatest turns on
   - needed to add testentitymanager bean to test class
   - should be able to pick up speed now
-
+08/31/24
+  - working on test suite
