@@ -1,0 +1,110 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 https://maven.apache.org/xsd/maven-4.0.0.xsd">
+	<modelVersion>4.0.0</modelVersion>
+
+	<parent>
+		<groupId>pks.example.modernize</groupId>
+		<artifactId>servers-parent</artifactId>
+		<version>${revision}</version>
+        <relativePath>../srv-parent/pom.xml</relativePath>
+	</parent>
+
+	<groupId>pks.example.modernize</groupId>
+	<artifactId>keycloak-server</artifactId>
+	<!-- <version>0.0.1-SNAPSHOT</version> -->
+	<name>Modernize - Keycloak Container</name>
+	<description></description>
+
+    <build>
+        <plugins>
+            <plugin>
+				<groupId>io.fabric8</groupId>
+				<artifactId>docker-maven-plugin</artifactId>
+                <configuration>
+                    <!-- <logStdout>true</logStdout>
+                    <verbose>build</verbose> -->
+                    <images>
+                        <image>
+                            <alias>keycloak-server</alias>
+                            <!-- <name>quay.io/keycloak/keycloak:latest</name> -->
+                            <name>pks-modernize/keycloak:${revision}</name>
+                            <run>
+                                <dependsOn>
+                                    <container>postgresql-server</container>
+                                </dependsOn>
+                                <env>
+                                    <KEYCLOAK_ADMIN>admin</KEYCLOAK_ADMIN>
+                                    <KEYCLOAK_ADMIN_PASSWORD>secret</KEYCLOAK_ADMIN_PASSWORD>
+                                    <KC_DB>postgres</KC_DB>
+                                    <KC_DB_URL>jdbc:postgresql://localhost:5555/srv_keycloak</KC_DB_URL>
+                                    <!-- <KC_DB_SCHEMA>KEYCLOAK</KC_DB_SCHEMA> -->
+                                    <KC_DB_USERNAME>srv_keycloak</KC_DB_USERNAME>
+                                    <KC_DB_PASSWORD>secret</KC_DB_PASSWORD>
+                                    <KC_HOSTNAME>localhost</KC_HOSTNAME>
+                                    <KC_HTTP_ENABLED>true</KC_HTTP_ENABLED>
+                                    <KC_HTTP_PORT>5055</KC_HTTP_PORT>
+                                    <KC_HTTPS_PORT>5056</KC_HTTPS_PORT>
+                                    <KC_HTTP_MANAGEMENT_PORT>5057</KC_HTTP_MANAGEMENT_PORT>
+                                    <KC_LOG>console</KC_LOG>
+                                    <KC_LOG_LEVEL>debug</KC_LOG_LEVEL>
+                                    <KC_HEALTH_ENABLED>true</KC_HEALTH_ENABLED>
+                                    <KC_METRICS_ENABLED>true</KC_METRICS_ENABLED>
+                                </env>
+                                
+                                <!-- <ports>
+                                    <port>5055:5055</port>
+                                    <port>5056:5056</port>
+                                    <port>5057:5057</port>
+                                </ports> -->
+                                <network>
+                                    <mode>host</mode>
+                                </network>                                
+                                <log>
+                                    <enabled>true</enabled>
+                                    <prefix>[INFO] KEYC: </prefix>
+                                    <date>none</date>
+                                </log>
+                            </run>
+                            <build>
+                                <dockerFile>keycloak.dockerfile</dockerFile>
+                                <filter>@</filter>
+                            </build>
+                        </image>
+                    </images>
+                </configuration>
+                <executions>
+                    <execution>
+                        <id>start</id>
+                        <phase>pre-integration-test</phase>
+                        <goals>
+                            <goal>build</goal>
+                            <goal>start</goal>
+                        </goals>
+                    </execution>
+                    <execution>
+                        <id>stop</id>
+                        <phase>post-integration-test</phase>
+                        <goals>
+                            <goal>stop</goal>
+                        </goals>
+                    </execution>
+                </executions>
+            </plugin>
+			<plugin>
+				<groupId>us.springett</groupId>
+				<artifactId>maven-uuid-generator</artifactId>
+				<version>1.0.1</version>
+				<executions>
+					<execution>
+						<phase>initialize</phase>
+						<goals>
+							<goal>generate</goal>
+						</goals>
+					</execution>
+				</executions>
+			</plugin>            
+        </plugins>
+    </build>
+
+</project>

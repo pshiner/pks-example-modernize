@@ -1,0 +1,242 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 https://maven.apache.org/xsd/maven-4.0.0.xsd">
+	<modelVersion>4.0.0</modelVersion>
+
+	<groupId>pks.example.modernize</groupId>
+	<artifactId>master-parent</artifactId>
+	<version>${revision}</version>
+	<name>Modernize Master Parent</name>
+	<packaging>pom</packaging>
+	<description><![CDATA[
+	Modernize Demonstration:
+	]]></description>
+	
+	<url/>
+	<licenses>
+		<license/>
+	</licenses>
+
+	<developers>
+		<developer/>
+	</developers>
+
+	<scm>
+		<connection/>
+		<developerConnection/>
+		<tag/>
+		<url/>
+	</scm>
+
+	<modules>
+		<module>entity</module>
+	</modules>
+
+	<properties>
+		<revision>999-SNAPSHOT</revision>
+
+		<java.version>21</java.version>
+
+		<spring-boot-starter.version>3.3.3</spring-boot-starter.version>
+		<hibernate-orm.version>${hibernate.version}</hibernate-orm.version>
+
+		<maven-compiler-plugin.version>3.10.1</maven-compiler-plugin.version>
+
+		<liquibase-maven-plugin.version>4.29.1</liquibase-maven-plugin.version>
+		<dependency-check-maven.version>10.0.4</dependency-check-maven.version>
+		<docker-maven-plugin.version>0.45.0</docker-maven-plugin.version>
+
+		<postgresql-server.port>5543</postgresql-server.port>
+		<keycloak-server-http.port>7070</keycloak-server-http.port>
+		<keycloak-server-https.port>7433</keycloak-server-https.port>
+
+	</properties>
+
+	<dependencyManagement>
+		<dependencies>
+			<dependency>
+				<groupId>org.springframework.boot</groupId>
+				<artifactId>spring-boot-starter-parent</artifactId>
+				<version>${spring-boot-starter.version}</version>
+				<type>pom</type>
+				<scope>import</scope>
+			</dependency>
+		</dependencies>
+	</dependencyManagement>
+
+	<dependencies>
+	</dependencies>
+
+	<build>
+		<pluginManagement>
+			<plugins>
+				<plugin>
+					<groupId>org.apache.maven.plugins</groupId>
+        			<artifactId>maven-compiler-plugin</artifactId>
+        			<version>${maven-compiler-plugin.version}</version>
+        			<configuration>
+	        			<compilerArgs>
+		        			<arg>-parameters</arg>
+	        			</compilerArgs>
+        			</configuration>
+		    	</plugin>
+
+				<plugin>
+					<groupId>io.fabric8</groupId>
+					<artifactId>docker-maven-plugin</artifactId>
+					<version>${docker-maven-plugin.version}</version>
+				</plugin>
+			
+				<plugin>
+					<groupId>org.hibernate.orm.tooling</groupId>
+					<artifactId>hibernate-enhance-maven-plugin</artifactId>
+					<!-- <version>${hibernate-orm.version}</version> -->
+					<executions>
+						<execution>
+							<id>enhance</id>
+							<goals>
+								<goal>enhance</goal>
+							</goals>
+							<configuration>
+								<enableLazyInitialization>true</enableLazyInitialization>
+								<enableDirtyTracking>true</enableDirtyTracking>
+								<enableAssociationManagement>true</enableAssociationManagement>
+							</configuration>
+						</execution>
+					</executions>
+				</plugin>
+
+				<plugin>
+					<groupId>org.graalvm.buildtools</groupId>
+					<artifactId>native-maven-plugin</artifactId>
+				</plugin>
+
+				<plugin>
+					<groupId>org.springframework.boot</groupId>
+					<artifactId>spring-boot-maven-plugin</artifactId>
+					<configuration>
+						<excludes>
+							<exclude>
+								<groupId>org.projectlombok</groupId>
+								<artifactId>lombok</artifactId>
+							</exclude>
+						</excludes>
+					</configuration>
+				</plugin>
+				<plugin>
+    				<groupId>org.liquibase</groupId>
+    				<artifactId>liquibase-maven-plugin</artifactId>
+    				<version>${liquibase-maven-plugin.version}</version>
+				</plugin>			
+				<plugin>
+					<groupId>org.owasp</groupId>
+					<artifactId>dependency-check-maven</artifactId>
+					<version>${dependency-check-maven.version}</version>
+					<executions>
+						<execution>
+							<goals>
+								<goal>check</goal>
+							</goals>
+						</execution>
+					</executions>
+				</plugin>
+			</plugins>
+		</pluginManagement>
+
+		<plugins>
+			<!-- <plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+       			<artifactId>maven-compiler-plugin</artifactId>
+			</plugin> -->
+			<plugin>
+				<groupId>us.springett</groupId>
+				<artifactId>maven-uuid-generator</artifactId>
+				<version>1.0.1</version>
+				<executions>
+					<execution>
+						<phase>initialize</phase>
+						<goals>
+							<goal>generate</goal>
+						</goals>
+					</execution>
+				</executions>
+			</plugin>
+		</plugins>
+	</build>
+
+<!-- add to compiler arguments "-XX:+EnableDynamicAgentLoading" -->
+
+	<reporting>
+		<plugins>
+			<plugin>
+				<groupId>org.owasp</groupId>
+				<artifactId>dependency-check-maven</artifactId>
+				<version>${dependency-check-maven.version}</version>
+				<reportSets>
+                    <reportSet>
+                        <reports>
+                            <report>aggregate</report>
+                        </reports>
+                    </reportSet>
+                </reportSets>
+            </plugin>
+		</plugins>
+	</reporting>
+
+	<profiles>
+		<!--
+			This profile is used by default and is optimized to support developers
+			working, deploying, and testing on their development workstation.
+		-->
+		<profile>
+			<id>workstation</id>
+			<activation>
+				<activeByDefault>true</activeByDefault>
+			</activation>
+		</profile>
+
+		<profile>
+			<id>build-server-images</id>
+			<modules>
+				<module>srv-parent</module>
+			</modules>
+		</profile>
+
+		<!--
+		-->
+		<profile>
+			<id>release</id>
+		</profile>
+
+		<profile>
+			<id>deploy-testing-environment</id>
+			<activation>
+				<property>
+					<name>env</name>
+					<value>tst</value>
+				</property>
+			</activation>
+		</profile>
+
+		<profile>
+			<id>deploy-staging-environment</id>
+			<activation>
+				<property>
+					<name>env</name>
+					<value>stg</value>
+				</property>
+			</activation>
+		</profile>
+
+		<profile>
+			<id>deploy-production-environment</id>
+			<activation>
+				<property>
+					<name>env</name>
+					<value>prd</value>
+				</property>
+			</activation>
+		</profile>
+	</profiles>
+
+</project>

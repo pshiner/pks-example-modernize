@@ -1,0 +1,82 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 https://maven.apache.org/xsd/maven-4.0.0.xsd">
+	<modelVersion>4.0.0</modelVersion>
+
+	<parent>
+		<groupId>pks.example.modernize</groupId>
+		<artifactId>servers-parent</artifactId>
+		<version>${revision}</version>
+        <relativePath>../srv-parent/pom.xml</relativePath>
+	</parent>
+
+	<groupId>pks.example.modernize</groupId>
+	<artifactId>postgresql-server</artifactId>
+	<!-- <version>0.0.1-SNAPSHOT</version> -->
+	<name>Modernize - PostgreSQL Container</name>
+	<description></description>
+
+    <build>
+        <plugins>
+            <plugin>
+				<groupId>io.fabric8</groupId>
+				<artifactId>docker-maven-plugin</artifactId>
+                <configuration>
+                    <!-- <logStdout>true</logStdout>
+                    <verbose>build</verbose> -->
+                    <images>
+                        <image>
+                            <alias>postgresql-server</alias>
+                            <name>pks-modernize/postgresql:${revision}</name>
+                            <run>
+                                <env>
+                                    <POSTGRES_PASSWORD>secret</POSTGRES_PASSWORD>
+                                    <PGPORT>5555</PGPORT>
+                                    <LANG>en_US.UTF-8</LANG>
+                                </env>
+                                <!-- <ports>
+                                    <port>5555:5555</port>
+                                </ports> -->
+                                <network>
+                                    <mode>host</mode>
+                                </network>
+                                <wait>
+                                    <!-- <log>database system is ready to accept connections</log> -->
+                                    <!-- <time>20000</time> -->
+                                    <log>zzz-preparations-complete.sh</log>
+                                </wait>
+                                <log>
+                                    <enabled>true</enabled>
+                                    <prefix>[INFO] PLSQL: </prefix>
+                                    <date>none</date>
+                                </log>
+                            </run>
+                            <build>
+                                <dockerFile>postgresql.dockerfile</dockerFile>
+                                <filter>@</filter>
+                            </build>
+                        </image>
+                    </images>
+                </configuration>
+                <executions>
+                    <execution>
+                        <id>start</id>
+                        <phase>pre-integration-test</phase>
+                        <goals>
+                            <goal>build</goal>
+                            <goal>start</goal>
+                        </goals>
+                    </execution>
+                    <execution>
+                        <id>stop</id>
+                        <phase>post-integration-test</phase>
+                        <goals>
+                            <goal>stop</goal>
+                        </goals>
+                    </execution>
+                </executions>
+            </plugin>
+        </plugins>
+    </build>
+
+</project>
