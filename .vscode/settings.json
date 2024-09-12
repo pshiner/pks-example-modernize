@@ -1,0 +1,20 @@
+{
+    "java.test.config": [
+        {
+            "name": "test",
+            "vmArgs": [ "-Dspring.profiles.active=test" ],
+            "testKind": "junit"
+        },
+        {
+            "name": "h2db",
+            "vmArgs": [ "-Dspring.profiles.active=test-h2db" ],
+            "testKind": "junit"
+        },
+        {
+            "name": "psql",
+            "vmArgs": [ "-Dspring.profiles.active=test-psql" ],
+            "testKind": "junit"
+        }
+    ],
+    "java.test.defaultConfig": "test"
+}

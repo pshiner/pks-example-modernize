@@ -36,7 +36,11 @@ Currently the application Visual Code `settings.json` for the project is using t
 - `mvn -Pservices docker:start` will build and start the service containers:  PostgreSQL and Keycloak.
 - `mvn -Pservices docker:stop`  will stop the containers.
 - `mvn versions:display-property-updates` will check for dependencies and plugins items that can easily be upgraded.
-- `mvn -Dspring.profiles.active=work-h2db install`
+- `mvn -Dspring.profiles.active=test,work-h2db install` equivilent to the Visual Code testing mode above.
 - `mvn liquibase:....`
 
 NOTE:  The maven tests will work the same with the same database initialization.  Right now the setup for Visual Code uses `work-h2db` and its Hibernate initialization.  Maven will get the same result if you use the same Spring profile.  The Liquibase intialization has more data.
+
+## Maven Versioning
+
+The version via Maven is driven by the recent git tags.  I can explain, but it is not something to worry about.  It will be unique for each set of builds against a given commit because of the unique git hashcode.  You will notice a 'dirty' in the string if you have not yet commited your changes to your local git.
