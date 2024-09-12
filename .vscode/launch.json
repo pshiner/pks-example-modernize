@@ -8,23 +8,38 @@
             "type": "java",
             "name": "Current File",
             "request": "launch",
-            "mainClass": "${file}"
+            "mainClass": "${file}",
         },
         {
             "type": "java",
-            "name": "EntityApplication",
+            "name": "prod w/ psql",
             "request": "launch",
             "mainClass": "pks.example.modernize.entity.EntityApplication",
-            "projectName": "entity",
-            "args": ""
+            "projectName": "app-entity",
         },
         {
             "type": "java",
-            "name": "w/ h2db",
+            "name": "work w/ h2db",
             "request": "launch",
             "mainClass": "pks.example.modernize.entity.EntityApplication",
-            "projectName": "entity",
-            "args": "-Dspring.profiles.active=h2db"
+            "projectName": "app-entity",
+            "vmArgs": [ "-Dspring.profiles.active=work-h2db" ],
+        },
+        {
+            "type": "java",
+            "name": "test w/ h2db",
+            "request": "launch",
+            "mainClass": "pks.example.modernize.entity.EntityApplication",
+            "projectName": "app-entity",
+            "vmArgs": [ "-Dspring.profiles.active=test-h2db" ],
+        },
+        {
+            "type": "java",
+            "name": "test w/ psql",
+            "request": "launch",
+            "mainClass": "pks.example.modernize.entity.EntityApplication",
+            "projectName": "app-entity",
+            "vmArgs": [ "-Dspring.profiles.active=test-psql" ],
         }        
     ]
 }

@@ -12,7 +12,7 @@
 	<groupId>pks.example.modernize</groupId>
 	<artifactId>servers-parent</artifactId>
 	<!-- <version>0.0.1-SNAPSHOT</version> -->
-	<name>Servers Parent</name>
+	<name>Modernize - Servers Parent POM</name>
     <packaging>pom</packaging>
 	<description>Demo project for Spring Boot</description>
 

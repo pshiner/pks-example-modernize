@@ -1,0 +1,10 @@
+spring:
+  application:
+    name: app-entity
+  datasource:
+    url: jdbc:postgresql://localhost:5555/app_modern_demo
+    username: app_runner
+    password: secret
+
+  liquibase:
+    change-log: classpath:/db/changelog/changelog-master.yaml

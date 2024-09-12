@@ -10,9 +10,9 @@
 	</parent>
 
 	<groupId>pks.example.modernize</groupId>
-	<artifactId>entity</artifactId>
+	<artifactId>app-entity</artifactId>
 	<!-- <version>0.0.1-SNAPSHOT</version> -->
-	<name>entity</name>
+	<name>Modernize - Application Entities</name>
 	<description>Demo project for Spring Boot</description>
 	
 	<url/>
@@ -70,7 +70,8 @@
 		<dependency>
 			<groupId>com.h2database</groupId>
 			<artifactId>h2</artifactId>
-			<scope>test</scope>
+			<!-- <version>2.1.214</version> -->
+			<scope>runtime</scope>
 		</dependency>
 		<dependency>
 			<groupId>org.postgresql</groupId>

@@ -1,0 +1,6 @@
+"fk_program_code","n_loan_number","c_code","c_name","c_description","bd_interest_rate","bd_original_principal"
+"AAA","1","XYZ-1","Boat","Going to buy a boat.","3.75000000","15500.00000000"
+"AAA","2","XYZ-2","House","Going to buy a house.","3.55750000","554300.00000000"
+"AAA","3","ABC-3","Truck","Going to buy a truck.","4.87500000","15500.00000000"
+"AAA","4","XYZ-4","Motorcycle","Going to buy a motorcycle.","2.75000000","15500.00000000"
+"AAA","5","ZZZ-5","Plane","Going to buy a plane.","8.75000000","675500.00000000"

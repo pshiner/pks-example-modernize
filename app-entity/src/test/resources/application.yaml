@@ -1,0 +1,5 @@
+spring:
+  profiles:
+    include: 
+    - "test"
+    - "work-h2db"
