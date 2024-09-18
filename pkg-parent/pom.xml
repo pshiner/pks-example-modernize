@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 https://maven.apache.org/xsd/maven-4.0.0.xsd">
+	<modelVersion>4.0.0</modelVersion>
+
+	<groupId>pks.example.modernize</groupId>
+	<artifactId>pkg-parent</artifactId>
+	<version>1.0.0</version>
+	<name>Modernize - Packaging Parent</name>
+	<packaging>pom</packaging>
+
+    <modules>
+        <module>pkg-assemblies</module>
+        <module>app-for-tomcat</module>
+        <module>pkg-distribution</module>
+    </modules>
+
+   	<properties>
+		<timestamp>${maven.build.timestamp}</timestamp>
+        <maven.build.timestamp.format>YYMMddHHmm</maven.build.timestamp.format>
+	</properties>
+
+</project>

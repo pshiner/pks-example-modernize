@@ -1,0 +1,94 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 https://maven.apache.org/xsd/maven-4.0.0.xsd">
+	<modelVersion>4.0.0</modelVersion>
+
+    <parent>
+    	<groupId>pks.example.modernize</groupId>
+	    <artifactId>pkg-parent</artifactId>
+	    <version>1.0.0</version>
+        <relativePath>../</relativePath>
+    </parent>
+
+	<artifactId>app-for-tomcat</artifactId>
+    <name>Modernize - Tomcat Application</name>
+	<packaging>war</packaging>
+
+	<properties>
+		<tomcat.contextBase>myapp</tomcat.contextBase>
+        <package.baseName>myapp</package.baseName>
+		<timestamp>${maven.build.timestamp}</timestamp>
+        <maven.build.timestamp.format>YYMMddHHmm</maven.build.timestamp.format>
+	</properties>
+
+	<build>
+		<finalName>${tomcat.contextBase}##${timestamp}</finalName>
+		<plugins>
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-war-plugin</artifactId>
+				<version>3.4.0</version>
+				<configuration>
+					<packagingExcludes>
+						WEB-INF/classes/catalina-base/**
+					</packagingExcludes>
+				</configuration>
+            </plugin>
+            <plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-resources-plugin</artifactId>
+				<version>3.3.1</version>
+                <executions>
+                    <execution>
+                        <id>copy-catalina-base-resources</id>
+                        <phase>validate</phase>
+                        <goals>
+                            <goal>copy-resources</goal>
+                        </goals>
+                        <configuration>
+                            <outputDirectory>${basedir}/target/catalina-base-resources</outputDirectory>
+                            <resources>
+                                <resource>
+                                    <directory>src/main/catalina-base-resources</directory>
+                                    <filtering>true</filtering>
+                                </resource>
+                            </resources>
+                            <filters>
+                                <filter>src/main/catalina-base-resources/catalina-base-filter.properties</filter>
+                            </filters>
+                        </configuration>
+                    </execution>
+                </executions>
+            </plugin>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-assembly-plugin</artifactId>
+                <version>3.7.1</version>
+                <dependencies>
+                    <dependency>
+                        <groupId>pks.example.modernize</groupId>
+                        <artifactId>pkg-assemblies</artifactId>
+                        <version>${project.version}</version>
+                    </dependency>
+                </dependencies>
+                <executions>
+                    <execution>
+                        <id>package-catalina-base</id>
+                        <phase>package</phase>
+                        <goals>
+                            <goal>single</goal>
+                        </goals>
+                        <configuration>
+                            <finalName>${package.baseName}-${project.version}</finalName>
+                            <appendAssemblyId>false</appendAssemblyId>
+                            <descriptorRefs>
+                                <descriptorRef>catalina-base</descriptorRef>
+                            </descriptorRefs>
+                        </configuration>
+                    </execution>
+                </executions>
+            </plugin>
+		</plugins>
+	</build>
+
+</project>

@@ -1,0 +1,8 @@
+<server>
+
+    <connection
+        port=@MY.PORT@
+        host=@MY.HOST@
+        />
+
+</server>

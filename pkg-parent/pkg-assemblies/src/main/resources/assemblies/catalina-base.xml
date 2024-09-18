@@ -1,0 +1,31 @@
+<assembly xmlns="http://maven.apache.org/ASSEMBLY/2.2.0"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="http://maven.apache.org/ASSEMBLY/2.2.0 http://maven.apache.org/xsd/assembly-2.2.0.xsd">
+
+    <id>catalina-base-assembly</id>
+    <formats>
+        <format>zip</format>
+        <format>tar.gz</format>
+    </formats>
+    <includeBaseDirectory>false</includeBaseDirectory>
+    <fileSets>
+        <fileSet>
+            <useDefaultExcludes>true</useDefaultExcludes>
+            <filtered>true</filtered>
+            <directory>target/catalina-base-resources</directory>
+            <outputDirectory>/catalina-base-${tomcat.contextBase}</outputDirectory>
+            <!-- <includes>
+                <include>target/catalina-base-resources/**</include>
+            </includes> -->
+        </fileSet>
+        <fileSet>
+            <useDefaultExcludes>true</useDefaultExcludes>
+            <directory>target/</directory>
+            <outputDirectory>/catalina-base-${tomcat.contextBase}/webapps</outputDirectory>
+            <includes>
+                <include>*.war</include>
+            </includes>
+        </fileSet>
+    </fileSets>
+
+</assembly>
