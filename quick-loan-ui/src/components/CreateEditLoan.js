@@ -8,6 +8,8 @@ import {
   MenuItem,
   Box,
   Paper,
+  Typography, 
+  IconButton,
 } from "@mui/material";
 import { useForm,Controller } from "react-hook-form";
 import { useDropdown } from "../context/dropDownContext"; // Import the dropdown hook
@@ -15,6 +17,12 @@ import { useEffect,useState,React } from "react";
 import axiosInstance from "../api/axiosInstance";
 import {useSnackbarContext} from "../context/SnackbarContext";
 import { useInterestRate } from "../context/IntrestRateContext";
+import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
+import ExpandLessIcon from "@mui/icons-material/ExpandLess";
+import CustomDataGridToolbar from "../components/common/CustomDataGridToolBar"
+import { DataGrid } from '@mui/x-data-grid';
+import { getColumns } from "./LoanTerm/PaymentTableColumns";
+
 
 export default function CreateEditLoan({ open, handleClose, onSuccess,id}) {
   
@@ -46,10 +54,8 @@ const { interestRate} = useInterestRate();
 // Retrieve dropdown data dynamically
 const methodOptions = getDropdownOptions("methods");
 const periodOptions = getDropdownOptions("periods");
-
-
-  
-
+const columns = getColumns();
+const [expanded, setExpanded] = useState(false); //expand payments section state
 const [loading,setLoading] = useState(true)
 
 
@@ -58,6 +64,7 @@ const [loading,setLoading] = useState(true)
     if (!open===true) return; 
 
     reset(); //reset form values
+    setExpanded(false); //make sure payment seection is not enabl initially
 
     if (!id) { //new mode
       setLoading(false);
@@ -87,6 +94,7 @@ const [loading,setLoading] = useState(true)
     formState: { errors },
     control,
     setValue,
+    getValues,
     reset
   } = useForm({ mode: "onTouched" });
 
@@ -317,6 +325,61 @@ const [loading,setLoading] = useState(true)
             /> */}
             </Paper>
           </Box>
+
+          {/* START Payment Box */}
+
+          {/* Header - Clickable to Expand/Collapse */}
+          <Box
+            sx={{
+              display: "flex",
+              justifyContent: "space-between",
+              alignItems: "center",
+              cursor: "pointer",
+              pt: 5
+            }}
+            onClick={() => setExpanded(!expanded)}
+          >
+            <Typography variant="h6">Payment Schedule</Typography>
+            <IconButton size="small">
+              {expanded ? <ExpandLessIcon /> : <ExpandMoreIcon />}
+            </IconButton>
+          </Box>
+
+          {/* Expandable Content Inside Paper */}
+          {expanded && (
+            <Box
+              sx={{
+                mt: 2,
+                p: 2,
+                borderRadius: 2,
+              }}
+            >
+              <Paper elevation={3} sx={{ flex: 1, padding: 3, borderRadius: 2 }}>
+                {// Check If New Loan
+                id ?
+                <DataGrid
+                  rows={getValues("payments")}
+                  getRowId={(row) => row.date || Math.random().toString(36).substring(2, 9)} // Settinng custom ID since API doesn't return one
+                  columns={columns}
+                  initialState={{
+                    columns: getValues("payments"),
+                    pagination: {
+                      paginationModel: {
+                        pageSize: 5,
+                      },
+                    },
+                    density: "compact"
+                  }}
+                  pageSizeOptions={[15]}
+                  checkboxSelection
+                  disableRowSelectionOnClick
+                  slots={{ toolbar: CustomDataGridToolbar }}
+                />
+                : "Payment schedule will appear once loan is created/priced"}
+              </Paper>
+            </Box>
+          )}
+        {/* END Payment Box */}
         </DialogContent>
       </form>
       <DialogActions>

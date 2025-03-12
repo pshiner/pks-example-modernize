@@ -4,7 +4,7 @@ import { DataGrid } from '@mui/x-data-grid';
 import axiosInstance from '../../api/axiosInstance';
 import { useEffect } from 'react';
 import { useState } from 'react';
-import { getColumns } from './columns';
+import { getColumns } from './LoanTableColumns';
 import CustomDataGridToolbar from '../common/CustomDataGridToolBar'
 import { useSnackbarContext } from "../../context/SnackbarContext"; // ✅ Import Context Hook
 
@@ -42,7 +42,7 @@ export default function DataGridDemo() {
             },
           },
         }}
-        pageSizeOptions={[5]}
+        pageSizeOptions={[15]}
         loading={loading}  //// loading functionality spinning icon while waiting for data
         checkboxSelection
         disableRowSelectionOnClick
